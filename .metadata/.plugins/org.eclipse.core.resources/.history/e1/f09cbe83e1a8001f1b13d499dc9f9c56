@@ -1,0 +1,59 @@
+package br.com.fiap.bo;
+
+import br.com.fiap.beans.PainelAdmin;
+import br.com.fiap.dao.PainelAdminDAO;
+
+import javax.swing.*;
+import java.sql.SQLException;
+import java.util.List;
+
+public class PainelAdminBO {
+
+    private PainelAdminDAO painelDAO;
+
+    public PainelAdminBO() {
+        this.painelDAO = new PainelAdminDAO();
+    }
+
+    public void salvarPainel(PainelAdmin painel) {
+        try {
+            painelDAO.salvar(painel);
+            JOptionPane.showMessageDialog(null, "Painel salvo com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar painel: " + e.getMessage());
+        }
+    }
+
+    public void listarPaineis() {
+        try {
+            List<PainelAdmin> paineis = painelDAO.listar();
+            StringBuilder lista = new StringBuilder("Lista de Paineis Administrativos:\n");
+            for (PainelAdmin painel : paineis) {
+                lista.append("ID: ").append(painel.getId())
+                     .append(", Nome: ").append(painel.getNome())
+                     .append("\n");
+            }
+            JOptionPane.showMessageDialog(null, lista.toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar paineis: " + e.getMessage());
+        }
+    }
+
+    public void atualizarPainel(PainelAdmin painel) {
+        try {
+            painelDAO.atualizar(painel);
+            JOptionPane.showMessageDialog(null, "Painel atualizado com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar painel: " + e.getMessage());
+        }
+    }
+
+    public void excluirPainel(int id) {
+        try {
+            painelDAO.excluir(id);
+            JOptionPane.showMessageDialog(null, "Painel excluído com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir painel: " + e.getMessage());
+        }
+    }
+}

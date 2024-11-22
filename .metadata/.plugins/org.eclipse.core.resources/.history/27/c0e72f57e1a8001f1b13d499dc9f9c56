@@ -1,0 +1,57 @@
+package br.com.fiap.bo;
+
+import br.com.fiap.beans.Sessao;
+import br.com.fiap.dao.SessaoDAO;
+
+import javax.swing.*;
+import java.sql.SQLException;
+import java.util.List;
+
+public class SessaoBO {
+
+    private SessaoDAO sessaoDAO;
+
+    public SessaoBO() {
+        this.sessaoDAO = new SessaoDAO();
+    }
+
+    public void salvarSessao(Sessao sessao) {
+        try {
+            sessaoDAO.salvar(sessao);
+            JOptionPane.showMessageDialog(null, "Sessão salva com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar sessão: " + e.getMessage());
+        }
+    }
+
+    public void listarSessoes() {
+        try {
+            List<Sessao> sessoes = sessaoDAO.listar();
+            StringBuilder lista = new StringBuilder("Lista de Sessões:\n");
+            for (Sessao sessao : sessoes) {
+                lista.append(sessao).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, lista.toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar sessões: " + e.getMessage());
+        }
+    }
+
+    public void atualizarSessao(Sessao sessao) {
+        try {
+            sessaoDAO.atualizar(sessao);
+            JOptionPane.showMessageDialog(null, "Sessão atualizada com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar sessão: " + e.getMessage());
+        }
+    }
+
+    public void excluirSessao(int id) {
+        try {
+            sessaoDAO.excluir(id);
+            JOptionPane.showMessageDialog(null, "Sessão excluída com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir sessão: " + e.getMessage());
+        }
+    }
+}
